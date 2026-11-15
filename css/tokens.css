@@ -1,0 +1,50 @@
+:root {
+  /* Studio Graphite Surface Palette */
+  --bg-canvas: #0d0f12;
+  --bg-surface: #15181e;
+  --bg-surface-elevated: #1c2028;
+  --bg-surface-hover: #232833;
+  --bg-input: #101318;
+
+  /* Borders & Dividers */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-default: rgba(255, 255, 255, 0.13);
+  --border-strong: rgba(255, 255, 255, 0.22);
+
+  /* Typography */
+  --text-primary: #f1f4f8;
+  --text-secondary: #9aa4b2;
+  --text-muted: #687385;
+
+  /* Studio Amber & Emerald Accents (No purple-on-dark) */
+  --accent-primary: #f59e0b;
+  --accent-primary-hover: #fbbf24;
+  --accent-primary-text: #0d0f12;
+  --accent-primary-soft: rgba(245, 158, 11, 0.14);
+
+  --accent-success: #10b981;
+  --accent-success-soft: rgba(16, 185, 129, 0.14);
+  --accent-info: #38bdf8;
+  --accent-info-soft: rgba(56, 189, 248, 0.14);
+  --accent-danger: #ef4444;
+  --accent-danger-soft: rgba(239, 68, 68, 0.14);
+
+  /* Font Families */
+  --font-sans: 'Inter', 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Spacing & Radii */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.42);
+  --shadow-lg: 0 20px 48px rgba(0, 0, 0, 0.65);
+
+  /* Transitions */
+  --ease-fast: 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-normal: 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}

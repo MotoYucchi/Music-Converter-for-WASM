@@ -1,0 +1,20 @@
+{
+  "name": "music-converter-for-wasm",
+  "version": "1.0.0",
+  "description": "Static WebAssembly Music Converter & Metadata Studio powered by FFmpeg.wasm",
+  "scripts": {
+    "serve": "python3 -m http.server 8080",
+    "sync-vendor": "mkdir -p vendor/ffmpeg vendor/ffmpeg-util vendor/ffmpeg-core && cp -r node_modules/@ffmpeg/ffmpeg/dist/esm/* vendor/ffmpeg/ && cp -r node_modules/@ffmpeg/util/dist/esm/* vendor/ffmpeg-util/ && cp -r node_modules/@ffmpeg/core/dist/esm/* vendor/ffmpeg-core/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MotoYucchi/Music-Converter-for-WASM.git"
+  },
+  "author": "MotoYucchi",
+  "license": "MIT",
+  "dependencies": {
+    "@ffmpeg/core": "^0.12.10",
+    "@ffmpeg/ffmpeg": "^0.12.15",
+    "@ffmpeg/util": "^0.12.2"
+  }
+}
