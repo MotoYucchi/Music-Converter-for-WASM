@@ -5,6 +5,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>WASM Music Converter — 高機能オーディオ変換 &amp; メタタグエディタ</title>
   <meta name="description" content="ブラウザ上のWebAssembly (FFmpeg.wasm) で完結する静的音楽コンバーター。MP3、AAC、WAV、FLAC、ALAC、Ogg Vorbis、Opus、WMA、AIFF対応。最大384kHz/32bit float変換、個別・アルバム一括メタタグ編集に対応。" />
+  <meta name="keywords" content="WASM Music Converter, FFmpeg.wasm, 音楽変換, オーディオコンバーター, MP3, AAC, WAV, FLAC, ALAC, Ogg Vorbis, Opus, WMA, AIFF, 384kHz, 32bit float, メタタグ編集, アルバムアートワーク, WebAssembly" />
+  <meta name="author" content="MotoYucchi" />
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+  <meta name="theme-color" content="#0d0f12" />
+  <link rel="canonical" href="https://motoyucchi.github.io/Music-Converter-for-WASM/" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <!-- Open Graph / Social & AI Search Metadata -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="WASM Music Converter" />
+  <meta property="og:title" content="WASM Music Converter by MotoYucchi — WebAssembly オーディオ変換 &amp; メタタグエディタ" />
+  <meta property="og:description" content="100%ブラウザ完結のWebAssembly音楽コンバーター。MP3/AAC/WAV/FLAC/ALAC/Ogg/Opus/WMA/AIFF、最大384kHz・32bit float、15項目メタタグ＆アルバム一括編集に対応。" />
+  <meta property="og:url" content="https://motoyucchi.github.io/Music-Converter-for-WASM/" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:locale:alternate" content="en_US" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="WASM Music Converter by MotoYucchi" />
+  <meta name="twitter:description" content="100%ブラウザ完結のWebAssembly音楽変換＆メタタグスタジオ。9形式・最大384kHz/32bit float・アルバムメタ一括編集対応。" />
+
+  <!-- Structured Data (JSON-LD) for Search Engines & AI Search -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebApplication",
+        "name": "WASM Music Converter",
+        "alternateName": "WASM Music Converter by MotoYucchi",
+        "url": "https://motoyucchi.github.io/Music-Converter-for-WASM/",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Any (Web Browser with WebAssembly)",
+        "browserRequirements": "Requires JavaScript and WebAssembly",
+        "inLanguage": ["ja", "en"],
+        "isAccessibleForFree": true,
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "MotoYucchi",
+          "url": "https://github.com/MotoYucchi"
+        },
+        "description": "100% client-side WebAssembly (FFmpeg.wasm) audio converter and metadata editor supporting MP3, AAC, WAV, FLAC, ALAC, Ogg Vorbis, Opus, WMA, and AIFF up to 384kHz / 32bit float.",
+        "featureList": [
+          "9 output formats: MP3, AAC, WAV, FLAC, ALAC, Ogg Vorbis, Opus, WMA, AIFF",
+          "5 bit depths: 8bit, 16bit, 24bit, 32bit, 32bit float",
+          "11 sample rates: 8kHz to 384kHz",
+          "Single and batch multi-file conversion with ZIP download",
+          "15-field metadata tag & cover artwork editing before and after conversion",
+          "Album Meta Edit for batch album metadata and track auto-numbering"
+        ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "音声ファイルは外部サーバーにアップロードされますか？ / Are audio files uploaded to a server?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "いいえ。すべての変換・メタタグ処理はお使いのブラウザ内の WebAssembly (FFmpeg.wasm) で完結し、外部サーバーへの送信は一切行われません。No, all processing runs 100% locally in your browser via WebAssembly."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "対応している形式・bit・サンプリング周波数は？ / Supported formats, bit depths, and sample rates?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "MP3, AAC, WAV, FLAC, ALAC, Ogg Vorbis, Opus, WMA, AIFF の9形式、8bit〜32bit float の5種類、8kHz〜384kHz の11種類のサンプリング周波数に対応しています。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "変換後でもメタタグやジャケット画像を編集できますか？ / Can I edit metadata after conversion?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "はい。変換前・変換後のどちらのファイルに対しても、曲名・アーティスト・歌詞・BPM・ジャケット画像など15項目の編集とアルバム一括編集が可能です。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -172,6 +261,27 @@
             <p class="empty-state-title" data-i18n="queue.emptyTitle">まだトラックが追加されていません</p>
             <p class="empty-state-desc" data-i18n="queue.emptyDesc">上のエリアに音声ファイルをドロップすると、既存のメタタグやジャケット画像を自動読み込みします。</p>
           </div>
+        </div>
+      </section>
+
+      <!-- Specs & FAQ (SEO / AI Search friendly) -->
+      <section class="panel" aria-labelledby="faq-heading">
+        <div class="panel-header">
+          <h2 id="faq-heading" class="panel-title" data-i18n="faq.heading">対応仕様・よくある質問 (FAQ)</h2>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary data-i18n="faq.q1">音声ファイルは外部サーバーにアップロードされますか？</summary>
+            <p class="faq-answer" data-i18n="faq.a1">いいえ。すべてのデコード・エンコード・メタタグ編集はお使いのブラウザ内の WebAssembly (FFmpeg.wasm) で完結するため、音声ファイルやジャケット画像が外部サーバーへ送信されることはありません。</p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="faq.q2">対応している形式・bit・サンプリング周波数は？</summary>
+            <p class="faq-answer" data-i18n="faq.a2">MP3、AAC (.m4a)、WAV、FLAC、ALAC (.m4a)、Ogg Vorbis、Opus、WMA、AIFF の9形式に対応しています。bit深度は 8bit / 16bit / 24bit / 32bit / 32bit float、サンプリング周波数は 8kHz〜384kHz（11段階）をサポートします。</p>
+          </details>
+          <details class="faq-item">
+            <summary data-i18n="faq.q3">変換後でもメタタグやジャケット画像を編集できますか？</summary>
+            <p class="faq-answer" data-i18n="faq.a3">はい。変換前だけでなく変換完了後のファイルに対しても、曲名・アーティスト・歌詞・BPM・ジャケット画像など全15項目のメタタグ編集および「アルバムメタ一括編集」が可能です。変換後の編集は音声を再エンコードせず高速にタグを再反映します。</p>
+          </details>
         </div>
       </section>
 

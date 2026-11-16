@@ -1,0 +1,17 @@
+# WASM Music Converter by MotoYucchi
+
+> A 100% client-side, static WebAssembly (FFmpeg.wasm) audio converter and metadata tag editor. All audio transcoding, resampling, and tag editing run locally inside the user's browser with zero server uploads.
+
+- Live App: https://motoyucchi.github.io/Music-Converter-for-WASM/
+- Licenses & Privacy Notice: https://motoyucchi.github.io/Music-Converter-for-WASM/licenses.html
+- Source Repository: https://github.com/MotoYucchi/Music-Converter-for-WASM
+
+## Key Capabilities
+
+- **Supported Output Formats (9)**: MP3 (`.mp3`), AAC (`.m4a`), WAV (`.wav`), FLAC (`.flac`), ALAC (`.m4a`), Ogg Vorbis (`.ogg`), Opus (`.opus`), WMA (`.wma`), AIFF (`.aiff`)
+- **Supported Bit Depths (5)**: `8bit`, `16bit`, `24bit`, `32bit`, `32bit float`
+- **Supported Sample Rates (11)**: `8kHz`, `16kHz`, `22.05kHz`, `32kHz`, `44.1kHz`, `48kHz`, `88.2kHz`, `96kHz`, `176.4kHz`, `192kHz`, `384kHz`
+- **Single & Batch Conversion**: Convert 1 or multiple files simultaneously, with per-track format overrides and UTF-8 ZIP archive download (`converted_music_YYYY-MM-DD_HH-mm.zip`).
+- **15-Field Metadata Editor (Pre- & Post-Conversion)**: Edit Title, Artist, Album, Album Artist, Track #, Disc #, Genre, Release Year, Composer, Lyricist, Album Artwork (cover image), Lyrics, BPM, Comment, and Copyright. Editing tags on already-converted files re-muxes without re-encoding audio (`-c:a copy`).
+- **Album Meta Edit**: Batch-apply shared album metadata and artwork, auto-number tracks (`1/N`), and edit individual track titles/numbers/BPM in one table.
+- **Multilingual (JA / EN)**: Auto-detects browser language (`navigator.languages`), with manual switching persisted via a functional cookie (`wmc_lang`). No tracking or analytics cookies are used.

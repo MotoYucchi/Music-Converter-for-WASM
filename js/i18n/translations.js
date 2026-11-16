@@ -168,7 +168,16 @@ export const TRANSLATIONS = {
     'toast.retagError': '変換済みファイルへのタグ反映に失敗: {msg}',
     'toast.albumApplied': '{count} トラックにアルバムメタ情報を反映しました',
     'toast.albumError': 'アルバム反映中にエラーが発生しました: {msg}',
-    'toast.langChanged': '表示言語を日本語に切り替えました'
+    'toast.langChanged': '表示言語を日本語に切り替えました',
+
+    // FAQ
+    'faq.heading': '対応仕様・よくある質問 (FAQ)',
+    'faq.q1': '音声ファイルは外部サーバーにアップロードされますか？',
+    'faq.a1': 'いいえ。すべてのデコード・エンコード・メタタグ編集はお使いのブラウザ内の WebAssembly (FFmpeg.wasm) で完結するため、音声ファイルやジャケット画像が外部サーバーへ送信されることはありません。',
+    'faq.q2': '対応している形式・bit・サンプリング周波数は？',
+    'faq.a2': 'MP3、AAC (.m4a)、WAV、FLAC、ALAC (.m4a)、Ogg Vorbis、Opus、WMA、AIFF の9形式に対応しています。bit深度は 8bit / 16bit / 24bit / 32bit / 32bit float、サンプリング周波数は 8kHz〜384kHz（11段階）をサポートします。',
+    'faq.q3': '変換後でもメタタグやジャケット画像を編集できますか？',
+    'faq.a3': 'はい。変換前だけでなく変換完了後のファイルに対しても、曲名・アーティスト・歌詞・BPM・ジャケット画像など全15項目のメタタグ編集および「アルバムメタ一括編集」が可能です。変換後の編集は音声を再エンコードせず高速にタグを再反映します。'
   },
 
   en: {
@@ -338,6 +347,15 @@ export const TRANSLATIONS = {
     'toast.retagError': 'Failed to update tags on converted file: {msg}',
     'toast.albumApplied': 'Applied album metadata to {count} track(s)',
     'toast.albumError': 'Error applying album metadata: {msg}',
-    'toast.langChanged': 'Language switched to English'
+    'toast.langChanged': 'Language switched to English',
+
+    // FAQ
+    'faq.heading': 'Supported Specs & FAQ',
+    'faq.q1': 'Are my audio files uploaded to a server?',
+    'faq.a1': 'No. All decoding, encoding, resampling, and metadata editing run 100% locally inside your browser via WebAssembly (FFmpeg.wasm). Your audio files and cover art never leave your device.',
+    'faq.q2': 'Which formats, bit depths, and sample rates are supported?',
+    'faq.a2': 'Supports 9 formats (MP3, AAC, WAV, FLAC, ALAC, Ogg Vorbis, Opus, WMA, AIFF), 5 bit depths (8bit, 16bit, 24bit, 32bit, 32bit float), and 11 sample rates from 8kHz up to 384kHz.',
+    'faq.q3': 'Can I edit metadata tags and cover art after conversion?',
+    'faq.a3': 'Yes. Both the 15-field individual metadata editor and Album Meta Edit work before and after conversion. Post-conversion edits re-mux tags without re-encoding the audio stream.'
   }
 };
