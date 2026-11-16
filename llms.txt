@@ -2,8 +2,8 @@
 
 > A 100% client-side, static WebAssembly (FFmpeg.wasm) audio converter and metadata tag editor. All audio transcoding, resampling, and tag editing run locally inside the user's browser with zero server uploads.
 
-- Live App: https://motoyucchi.github.io/Music-Converter-for-WASM/
-- Licenses & Privacy Notice: https://motoyucchi.github.io/Music-Converter-for-WASM/licenses.html
+- Entry Page: `index.html`
+- Licenses & Privacy Notice: `licenses.html`
 - Source Repository: https://github.com/MotoYucchi/Music-Converter-for-WASM
 
 ## Key Capabilities

@@ -1,4 +1,4 @@
-import { SUPPORTED_LANGS, TRANSLATIONS } from './translations.js';
+import { SUPPORTED_LANGS, TRANSLATIONS } from './translations.js?v=2';
 
 const LANG_COOKIE_NAME = 'wmc_lang';
 
@@ -60,6 +60,12 @@ class I18nService {
     }
   }
 
+  hasKey(key) {
+    const dict = TRANSLATIONS[this.lang] || TRANSLATIONS.en;
+    return Object.prototype.hasOwnProperty.call(dict, key) ||
+      Object.prototype.hasOwnProperty.call(TRANSLATIONS.en, key);
+  }
+
   t(key, params = {}) {
     const dict = TRANSLATIONS[this.lang] || TRANSLATIONS.en;
     let text = dict[key] ?? TRANSLATIONS.en[key] ?? key;
@@ -73,18 +79,29 @@ class I18nService {
     document.documentElement.lang = this.lang;
 
     const titleKey = document.body?.dataset?.titleKey || 'meta.title';
-    document.title = this.t(titleKey);
+    if (this.hasKey(titleKey)) {
+      document.title = this.t(titleKey);
+    }
 
     document.querySelectorAll('[data-i18n]').forEach((el) => {
-      el.textContent = this.t(el.dataset.i18n);
+      const key = el.dataset.i18n;
+      if (this.hasKey(key)) {
+        el.textContent = this.t(key);
+      }
     });
 
     document.querySelectorAll('[data-i18n-html]').forEach((el) => {
-      el.innerHTML = this.t(el.dataset.i18nHtml);
+      const key = el.dataset.i18nHtml;
+      if (this.hasKey(key)) {
+        el.innerHTML = this.t(key);
+      }
     });
 
     document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
-      el.placeholder = this.t(el.dataset.i18nPlaceholder);
+      const key = el.dataset.i18nPlaceholder;
+      if (this.hasKey(key)) {
+        el.placeholder = this.t(key);
+      }
     });
 
     const selector = document.getElementById('lang-selector');
