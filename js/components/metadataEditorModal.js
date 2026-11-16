@@ -3,6 +3,7 @@ import { store } from '../state/store.js';
 import { ffmpegService } from '../services/ffmpegService.js';
 import { formatBytes } from '../utils/formatters.js';
 import { showToast } from '../utils/toast.js';
+import { t } from '../i18n/i18n.js';
 
 export function initMetadataEditorModal() {
   const modal = document.getElementById('metadata-modal');
@@ -37,13 +38,13 @@ export function initMetadataEditorModal() {
       artworkPreview.classList.add('hidden');
       artworkPlaceholder.classList.remove('hidden');
       btnArtRemove.disabled = true;
-      artworkInfo.textContent = '画像未設定';
+      artworkInfo.textContent = t('meta.artworkNone');
     }
   }
 
   async function setArtworkFromFile(file) {
     if (!file || !file.type.startsWith('image/')) {
-      showToast('JPEG / PNG / WebP 画像を選択してください', 'error');
+      showToast(t('toast.invalidImage'), 'error');
       return;
     }
     const buf = new Uint8Array(await file.arrayBuffer());
@@ -70,7 +71,7 @@ export function initMetadataEditorModal() {
 
     subtitleEl.textContent = track.originalName;
     if (track.status === 'converted') {
-      targetBanner.textContent = '変換済みファイルです。保存すると変換済みファイルにも最新のメタタグとジャケット画像が即座に反映されます。';
+      targetBanner.textContent = t('meta.convertedBanner');
       targetBanner.classList.remove('hidden');
     } else {
       targetBanner.classList.add('hidden');
@@ -169,10 +170,10 @@ export function initMetadataEditorModal() {
 
     if (track.status === 'converted' && track.convertedBlob) {
       btnSave.disabled = true;
-      btnSave.textContent = 'タグを反映中...';
+      btnSave.textContent = t('meta.saving');
       try {
         const updated = await ffmpegService.reapplyMetadataToConverted(store.getTrack(activeTrackId), {
-          onStatus: (s, t) => store.setWasmStatus(s, t)
+          onStatus: (s, key) => store.setWasmStatus(s, key)
         });
         if (updated) {
           if (track.convertedUrl) URL.revokeObjectURL(track.convertedUrl);
@@ -182,15 +183,15 @@ export function initMetadataEditorModal() {
             convertedName: updated.filename
           });
         }
-        showToast('メタタグを保存し、変換済みファイルにも反映しました', 'success');
+        showToast(t('toast.metaSavedRetagged'), 'success');
       } catch (err) {
-        showToast(`変換済みファイルへのタグ反映に失敗: ${err.message}`, 'error');
+        showToast(t('toast.retagError', { msg: err.message }), 'error');
       } finally {
         btnSave.disabled = false;
-        btnSave.textContent = 'メタタグを保存';
+        btnSave.textContent = t('meta.save');
       }
     } else {
-      showToast('メタタグを保存しました', 'success');
+      showToast(t('toast.metaSaved'), 'success');
     }
 
     close();

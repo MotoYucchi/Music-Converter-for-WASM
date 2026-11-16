@@ -200,7 +200,7 @@ export function initAlbumMetadataModal({ onOpenTrackMetadata }) {
     const shouldApplyArt = applyArtworkCheckbox.checked && (artworkDirty || sharedArtwork !== null);
 
     btnApply.disabled = true;
-    btnApply.textContent = '反映中...';
+    btnApply.textContent = t('album.applyingBtn');
 
     try {
       for (const row of draftRows) {
@@ -240,7 +240,7 @@ export function initAlbumMetadataModal({ onOpenTrackMetadata }) {
 
         if (track.status === 'converted' && track.convertedBlob) {
           const updated = await ffmpegService.reapplyMetadataToConverted(store.getTrack(track.id), {
-            onStatus: (s, t) => store.setWasmStatus(s, t)
+            onStatus: (s, key) => store.setWasmStatus(s, key)
           });
           if (updated) {
             if (track.convertedUrl) URL.revokeObjectURL(track.convertedUrl);
@@ -253,13 +253,13 @@ export function initAlbumMetadataModal({ onOpenTrackMetadata }) {
         }
       }
 
-      showToast(`${draftRows.length} トラックにアルバムメタ情報を反映しました`, 'success');
+      showToast(t('toast.albumApplied', { count: draftRows.length }), 'success');
       close();
     } catch (err) {
-      showToast(`アルバム反映中にエラーが発生しました: ${err.message}`, 'error');
+      showToast(t('toast.albumError', { msg: err.message }), 'error');
     } finally {
       btnApply.disabled = false;
-      btnApply.textContent = 'アルバム設定を全トラックに反映';
+      btnApply.textContent = t('album.applyBtn');
     }
   });
 
@@ -271,3 +271,4 @@ export function initAlbumMetadataModal({ onOpenTrackMetadata }) {
 
   return { open, close };
 }
+

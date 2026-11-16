@@ -29,27 +29,31 @@
           </div>
           <div class="brand-text">
             <h1 class="brand-title">WASM Music Converter</h1>
-            <p class="brand-subtitle">100% クライアントサイド WebAssembly オーディオ変換 &amp; メタタグスタジオ</p>
+            <p class="brand-subtitle" data-i18n="brand.subtitle">100% クライアントサイド WebAssembly オーディオ変換 &amp; メタタグスタジオ</p>
           </div>
         </div>
 
         <div class="header-actions">
-          <div id="wasm-status-badge" class="status-badge status-idle" title="FFmpeg WASM エンジン状態">
+          <select id="lang-selector" class="select-control lang-select" aria-label="Language">
+            <option value="ja">日本語</option>
+            <option value="en">English</option>
+          </select>
+          <div id="wasm-status-badge" class="status-badge status-idle" title="FFmpeg WASM">
             <span class="status-dot"></span>
-            <span id="wasm-status-text">WASM 待機中</span>
+            <span id="wasm-status-text" data-i18n="wasm.idle">WASM 待機中</span>
           </div>
           <button id="btn-open-album-meta" class="btn btn-secondary" type="button" disabled>
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="12" cy="12" r="10" />
               <circle cx="12" cy="12" r="3" />
             </svg>
-            <span>アルバムメタ編集</span>
+            <span data-i18n="header.albumMeta">アルバムメタ編集</span>
           </button>
           <button id="btn-convert-all" class="btn btn-primary" type="button" disabled>
             <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <polygon points="5 3 19 12 5 21 5 3" />
             </svg>
-            <span>すべて変換</span>
+            <span data-i18n="header.convertAll">すべて変換</span>
           </button>
         </div>
       </div>
@@ -60,41 +64,41 @@
       <section class="panel settings-panel" aria-labelledby="settings-heading">
         <div class="panel-header">
           <div class="panel-title-group">
-            <h2 id="settings-heading" class="panel-title">出力フォーマット設定 (マスター)</h2>
-            <span class="panel-hint">個別トラックごとに上書き設定も可能です</span>
+            <h2 id="settings-heading" class="panel-title" data-i18n="settings.title">出力フォーマット設定 (マスター)</h2>
+            <span class="panel-hint" data-i18n="settings.hint">個別トラックごとに上書き設定も可能です</span>
           </div>
-          <button id="btn-apply-master-all" class="btn btn-ghost btn-sm" type="button" disabled>
+          <button id="btn-apply-master-all" class="btn btn-ghost btn-sm" type="button" disabled data-i18n="settings.applyAll">
             全トラックに適用
           </button>
         </div>
 
         <div class="settings-grid">
           <div class="field-group">
-            <label for="master-format" class="field-label">出力形式</label>
+            <label for="master-format" class="field-label" data-i18n="settings.format">出力形式</label>
             <select id="master-format" class="select-control"></select>
           </div>
 
           <div class="field-group">
-            <label for="master-bit-depth" class="field-label">ビット深度 (Bit)</label>
+            <label for="master-bit-depth" class="field-label" data-i18n="settings.bitDepth">ビット深度 (Bit)</label>
             <select id="master-bit-depth" class="select-control"></select>
           </div>
 
           <div class="field-group">
-            <label for="master-sample-rate" class="field-label">サンプリング周波数</label>
+            <label for="master-sample-rate" class="field-label" data-i18n="settings.sampleRate">サンプリング周波数</label>
             <select id="master-sample-rate" class="select-control"></select>
           </div>
 
           <div class="field-group" id="master-bitrate-group">
-            <label for="master-bitrate" class="field-label">ビットレート / 品質</label>
+            <label for="master-bitrate" class="field-label" data-i18n="settings.bitrate">ビットレート / 品質</label>
             <select id="master-bitrate" class="select-control"></select>
           </div>
 
           <div class="field-group">
-            <label for="master-channels" class="field-label">チャンネル</label>
+            <label for="master-channels" class="field-label" data-i18n="settings.channels">チャンネル</label>
             <select id="master-channels" class="select-control">
-              <option value="original">元のチャンネルを維持</option>
-              <option value="2">ステレオ (2ch)</option>
-              <option value="1">モノラル (1ch)</option>
+              <option value="original" data-i18n="settings.chOriginal">元のチャンネルを維持</option>
+              <option value="2" data-i18n="settings.chStereo">ステレオ (2ch)</option>
+              <option value="1" data-i18n="settings.chMono">モノラル (1ch)</option>
             </select>
           </div>
         </div>
@@ -103,8 +107,8 @@
       </section>
 
       <!-- File Upload Dropzone -->
-      <section class="panel dropzone-panel" aria-label="音声ファイルアップロード">
-        <div id="dropzone" class="dropzone" tabindex="0" role="button" aria-label="音声ファイルをドラッグ＆ドロップ、またはクリックして選択">
+      <section class="panel dropzone-panel" aria-label="Audio Upload">
+        <div id="dropzone" class="dropzone" tabindex="0" role="button">
           <input id="file-input" type="file" multiple accept="audio/*,.mp3,.aac,.m4a,.wav,.flac,.ogg,.oga,.opus,.wma,.aiff,.aif,.webm" hidden />
           <input id="folder-input" type="file" webkitdirectory directory multiple hidden />
 
@@ -117,14 +121,14 @@
               </svg>
             </div>
             <div class="dropzone-text">
-              <p class="dropzone-primary">音声ファイルをここにドラッグ＆ドロップ</p>
-              <p class="dropzone-secondary">
+              <p class="dropzone-primary" data-i18n="drop.primary">音声ファイルをここにドラッグ＆ドロップ</p>
+              <p class="dropzone-secondary" data-i18n="drop.secondary">
                 1ファイル〜複数ファイル同時変換対応 ・ MP3 / AAC / WAV / FLAC / ALAC / Ogg Vorbis / Opus / WMA / AIFF
               </p>
             </div>
             <div class="dropzone-buttons">
-              <button id="btn-select-files" class="btn btn-secondary btn-sm" type="button">ファイルを選択</button>
-              <button id="btn-select-folder" class="btn btn-ghost btn-sm" type="button">フォルダを選択</button>
+              <button id="btn-select-files" class="btn btn-secondary btn-sm" type="button" data-i18n="drop.selectFiles">ファイルを選択</button>
+              <button id="btn-select-folder" class="btn btn-ghost btn-sm" type="button" data-i18n="drop.selectFolder">フォルダを選択</button>
             </div>
           </div>
         </div>
@@ -134,7 +138,7 @@
       <section class="panel queue-panel" aria-labelledby="queue-heading">
         <div class="panel-header queue-header">
           <div class="panel-title-group">
-            <h2 id="queue-heading" class="panel-title">トラックキュー</h2>
+            <h2 id="queue-heading" class="panel-title" data-i18n="queue.title">トラックキュー</h2>
             <span id="queue-summary" class="queue-summary">0 トラック</span>
           </div>
 
@@ -145,9 +149,9 @@
                 <polyline points="7 10 12 15 17 10" />
                 <line x1="12" y1="15" x2="12" y2="3" />
               </svg>
-              <span>変換済みをZIP保存</span>
+              <span data-i18n="queue.downloadZip">変換済みをZIP保存</span>
             </button>
-            <button id="btn-clear-queue" class="btn btn-ghost btn-sm" type="button" disabled>
+            <button id="btn-clear-queue" class="btn btn-ghost btn-sm" type="button" disabled data-i18n="queue.clearAll">
               すべて削除
             </button>
           </div>
@@ -155,7 +159,7 @@
 
         <div id="global-progress-bar" class="global-progress hidden" aria-live="polite">
           <div class="global-progress-info">
-            <span id="global-progress-label">変換中...</span>
+            <span id="global-progress-label">...</span>
             <span id="global-progress-count" class="mono">0 / 0</span>
           </div>
           <div class="progress-track">
@@ -165,18 +169,18 @@
 
         <div id="track-list" class="track-list">
           <div class="empty-state" id="empty-state">
-            <p class="empty-state-title">まだトラックが追加されていません</p>
-            <p class="empty-state-desc">上のエリアに音声ファイルをドロップすると、既存のメタタグやジャケット画像を自動読み込みします。</p>
+            <p class="empty-state-title" data-i18n="queue.emptyTitle">まだトラックが追加されていません</p>
+            <p class="empty-state-desc" data-i18n="queue.emptyDesc">上のエリアに音声ファイルをドロップすると、既存のメタタグやジャケット画像を自動読み込みします。</p>
           </div>
         </div>
       </section>
 
-      <aside class="notice-strip" aria-label="ご利用上の注意">
+      <aside class="notice-strip" aria-label="Notice">
         <div class="notice-strip-text">
-          <span class="notice-pill">Cookieless 設計</span>
-          <span>Cookie・外部送信は一切行いません。初回変換時に約31MBのWASMエンジンを読み込み、すべての処理はお使いの端末上で実行されるため、変換速度や安定性はご利用端末の性能に依存します。</span>
+          <span class="notice-pill" data-i18n="notice.badge">トラッキングなし</span>
+          <span data-i18n="notice.text">音声・メタデータの外部送信や解析Cookieは一切使用しません（言語設定の保存にのみCookieを使用）。初回変換時に約31MBのWASMエンジンを読み込み、すべての処理はお使いの端末上で実行されるため、変換速度や安定性はご利用端末の性能に依存します。</span>
         </div>
-        <a href="licenses.html" class="footer-link">詳細・ライセンス表記 &rarr;</a>
+        <a href="licenses.html" class="footer-link" data-i18n="notice.link">詳細・ライセンス表記 &rarr;</a>
       </aside>
     </main>
 
@@ -184,8 +188,8 @@
       <div class="footer-inner">
         <span>WASM Music Converter <strong>by MotoYucchi</strong> &mdash; Powered by FFmpeg.wasm</span>
         <div class="footer-links">
-          <span>完全 Cookieless / 端末完結処理</span>
-          <a href="licenses.html" class="footer-link">ライセンス・ご利用上の注意</a>
+          <span data-i18n="footer.privacy">端末完結処理 / 解析Cookie不使用</span>
+          <a href="licenses.html" class="footer-link" data-i18n="footer.licenses">ライセンス・ご利用上の注意</a>
           <a href="https://github.com/MotoYucchi/Music-Converter-for-WASM" class="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
         </div>
       </div>
@@ -197,10 +201,10 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-header">
         <div>
-          <h3 id="metadata-modal-title" class="modal-title">メタタグ編集</h3>
+          <h3 id="metadata-modal-title" class="modal-title" data-i18n="meta.modalTitle">メタタグ編集</h3>
           <p id="metadata-modal-subtitle" class="modal-subtitle"></p>
         </div>
-        <button id="btn-close-metadata-modal" class="icon-btn" type="button" aria-label="閉じる">
+        <button id="btn-close-metadata-modal" class="icon-btn" type="button" aria-label="Close">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
@@ -214,104 +218,104 @@
         <div class="meta-editor-layout">
           <!-- Left: Artwork -->
           <div class="artwork-column">
-            <span class="field-label">アルバムアートワーク (ジャケット画像)</span>
-            <div id="meta-artwork-drop" class="artwork-box" tabindex="0" role="button" aria-label="ジャケット画像を選択またはドロップ">
-              <img id="meta-artwork-preview" class="artwork-preview hidden" alt="アルバムアートワークプレビュー" />
+            <span class="field-label" data-i18n="meta.artworkLabel">アルバムアートワーク (ジャケット画像)</span>
+            <div id="meta-artwork-drop" class="artwork-box" tabindex="0" role="button">
+              <img id="meta-artwork-preview" class="artwork-preview hidden" alt="Artwork preview" />
               <div id="meta-artwork-placeholder" class="artwork-placeholder">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                   <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                   <circle cx="8.5" cy="8.5" r="1.5" />
                   <polyline points="21 15 16 10 5 21" />
                 </svg>
-                <span>クリックまたはドロップで画像を設定</span>
+                <span data-i18n="meta.artworkDrop">クリックまたはドロップで画像を設定</span>
               </div>
               <input id="meta-artwork-input" type="file" accept="image/jpeg,image/png,image/webp" hidden />
             </div>
             <div class="artwork-actions">
-              <button id="btn-meta-artwork-select" class="btn btn-secondary btn-xs" type="button">画像を選択</button>
-              <button id="btn-meta-artwork-remove" class="btn btn-ghost btn-xs" type="button" disabled>削除</button>
+              <button id="btn-meta-artwork-select" class="btn btn-secondary btn-xs" type="button" data-i18n="meta.artworkSelect">画像を選択</button>
+              <button id="btn-meta-artwork-remove" class="btn btn-ghost btn-xs" type="button" disabled data-i18n="meta.artworkRemove">削除</button>
             </div>
-            <p id="meta-artwork-info" class="artwork-info">画像未設定</p>
+            <p id="meta-artwork-info" class="artwork-info" data-i18n="meta.artworkNone">画像未設定</p>
           </div>
 
           <!-- Right: 14 text/number fields -->
           <div class="meta-fields-grid">
             <div class="field-group span-2">
-              <label for="meta-title" class="field-label">曲名 (Title)</label>
-              <input id="meta-title" name="title" type="text" class="input-control" placeholder="例: Nocturne in E-flat" />
+              <label for="meta-title" class="field-label" data-i18n="meta.title">曲名 (Title)</label>
+              <input id="meta-title" name="title" type="text" class="input-control" placeholder="Nocturne in E-flat" />
             </div>
 
             <div class="field-group">
-              <label for="meta-artist" class="field-label">アーティスト名 (Artist)</label>
-              <input id="meta-artist" name="artist" type="text" class="input-control" placeholder="例: Artist Name" />
+              <label for="meta-artist" class="field-label" data-i18n="meta.artist">アーティスト名 (Artist)</label>
+              <input id="meta-artist" name="artist" type="text" class="input-control" placeholder="Artist Name" />
             </div>
 
             <div class="field-group">
-              <label for="meta-album-artist" class="field-label">アルバムアーティスト (Album Artist)</label>
-              <input id="meta-album-artist" name="albumArtist" type="text" class="input-control" placeholder="例: Various Artists" />
+              <label for="meta-album-artist" class="field-label" data-i18n="meta.albumArtist">アルバムアーティスト (Album Artist)</label>
+              <input id="meta-album-artist" name="albumArtist" type="text" class="input-control" placeholder="Various Artists" />
             </div>
 
             <div class="field-group span-2">
-              <label for="meta-album" class="field-label">アルバム名 (Album)</label>
-              <input id="meta-album" name="album" type="text" class="input-control" placeholder="例: Midnight Sessions" />
+              <label for="meta-album" class="field-label" data-i18n="meta.album">アルバム名 (Album)</label>
+              <input id="meta-album" name="album" type="text" class="input-control" placeholder="Midnight Sessions" />
             </div>
 
             <div class="field-group">
-              <label for="meta-track" class="field-label">トラック番号 (Track #)</label>
-              <input id="meta-track" name="track" type="text" class="input-control mono" placeholder="例: 1 または 1/12" />
+              <label for="meta-track" class="field-label" data-i18n="meta.track">トラック番号 (Track #)</label>
+              <input id="meta-track" name="track" type="text" class="input-control mono" placeholder="1 / 12" />
             </div>
 
             <div class="field-group">
-              <label for="meta-disc" class="field-label">ディスク番号 (Disc #)</label>
-              <input id="meta-disc" name="disc" type="text" class="input-control mono" placeholder="例: 1 または 1/2" />
+              <label for="meta-disc" class="field-label" data-i18n="meta.disc">ディスク番号 (Disc #)</label>
+              <input id="meta-disc" name="disc" type="text" class="input-control mono" placeholder="1 / 2" />
             </div>
 
             <div class="field-group">
-              <label for="meta-genre" class="field-label">ジャンル (Genre)</label>
-              <input id="meta-genre" name="genre" type="text" class="input-control" placeholder="例: Electronic, Jazz" />
+              <label for="meta-genre" class="field-label" data-i18n="meta.genre">ジャンル (Genre)</label>
+              <input id="meta-genre" name="genre" type="text" class="input-control" placeholder="Electronic, Jazz" />
             </div>
 
             <div class="field-group">
-              <label for="meta-year" class="field-label">リリース年 (Year)</label>
-              <input id="meta-year" name="year" type="text" class="input-control mono" placeholder="例: 2026" />
+              <label for="meta-year" class="field-label" data-i18n="meta.year">リリース年 (Year)</label>
+              <input id="meta-year" name="year" type="text" class="input-control mono" placeholder="2026" />
             </div>
 
             <div class="field-group">
-              <label for="meta-composer" class="field-label">作曲者 (Composer)</label>
-              <input id="meta-composer" name="composer" type="text" class="input-control" placeholder="例: Composer Name" />
+              <label for="meta-composer" class="field-label" data-i18n="meta.composer">作曲者 (Composer)</label>
+              <input id="meta-composer" name="composer" type="text" class="input-control" placeholder="Composer Name" />
             </div>
 
             <div class="field-group">
-              <label for="meta-lyricist" class="field-label">作詞者 (Lyricist)</label>
-              <input id="meta-lyricist" name="lyricist" type="text" class="input-control" placeholder="例: Lyricist Name" />
+              <label for="meta-lyricist" class="field-label" data-i18n="meta.lyricist">作詞者 (Lyricist)</label>
+              <input id="meta-lyricist" name="lyricist" type="text" class="input-control" placeholder="Lyricist Name" />
             </div>
 
             <div class="field-group">
-              <label for="meta-bpm" class="field-label">BPM（テンポ）</label>
-              <input id="meta-bpm" name="bpm" type="number" min="1" max="999" step="0.1" class="input-control mono" placeholder="例: 128" />
+              <label for="meta-bpm" class="field-label" data-i18n="meta.bpm">BPM（テンポ）</label>
+              <input id="meta-bpm" name="bpm" type="number" min="1" max="999" step="0.1" class="input-control mono" placeholder="128" />
             </div>
 
             <div class="field-group">
-              <label for="meta-copyright" class="field-label">著作権情報 (Copyright)</label>
-              <input id="meta-copyright" name="copyright" type="text" class="input-control" placeholder="例: © 2026 Studio" />
+              <label for="meta-copyright" class="field-label" data-i18n="meta.copyright">著作権情報 (Copyright)</label>
+              <input id="meta-copyright" name="copyright" type="text" class="input-control" placeholder="© 2026 Studio" />
             </div>
 
             <div class="field-group span-2">
-              <label for="meta-comment" class="field-label">コメント (Comment)</label>
-              <input id="meta-comment" name="comment" type="text" class="input-control" placeholder="例: Mastered at 96kHz/24bit" />
+              <label for="meta-comment" class="field-label" data-i18n="meta.comment">コメント (Comment)</label>
+              <input id="meta-comment" name="comment" type="text" class="input-control" placeholder="Mastered at 96kHz/24bit" />
             </div>
 
             <div class="field-group span-2">
-              <label for="meta-lyrics" class="field-label">歌詞 (Lyrics)</label>
-              <textarea id="meta-lyrics" name="lyrics" rows="4" class="textarea-control" placeholder="歌詞を入力..."></textarea>
+              <label for="meta-lyrics" class="field-label" data-i18n="meta.lyrics">歌詞 (Lyrics)</label>
+              <textarea id="meta-lyrics" name="lyrics" rows="4" class="textarea-control" placeholder="..."></textarea>
             </div>
           </div>
         </div>
       </form>
 
       <div class="modal-footer">
-        <button id="btn-cancel-metadata" class="btn btn-ghost" type="button">キャンセル</button>
-        <button id="btn-save-metadata" class="btn btn-primary" type="submit" form="metadata-form">
+        <button id="btn-cancel-metadata" class="btn btn-ghost" type="button" data-i18n="meta.cancel">キャンセル</button>
+        <button id="btn-save-metadata" class="btn btn-primary" type="submit" form="metadata-form" data-i18n="meta.save">
           メタタグを保存
         </button>
       </div>
@@ -323,10 +327,10 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-header">
         <div>
-          <h3 id="album-modal-title" class="modal-title">アルバムメタ一括編集 (Album Meta Edit)</h3>
-          <p class="modal-subtitle">アルバム共通情報のバッチ適用と、アルバム内楽曲の個別設定をまとめて編集できます</p>
+          <h3 id="album-modal-title" class="modal-title" data-i18n="album.modalTitle">アルバムメタ一括編集 (Album Meta Edit)</h3>
+          <p class="modal-subtitle" data-i18n="album.modalSubtitle">アルバム共通情報のバッチ適用と、アルバム内楽曲の個別設定をまとめて編集できます</p>
         </div>
-        <button id="btn-close-album-modal" class="icon-btn" type="button" aria-label="閉じる">
+        <button id="btn-close-album-modal" class="icon-btn" type="button" aria-label="Close">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
@@ -336,28 +340,28 @@
 
       <div class="modal-body album-modal-body">
         <div class="album-shared-section">
-          <h4 class="section-heading">アルバム共通メタ情報 (チェックした項目を一括反映)</h4>
+          <h4 class="section-heading" data-i18n="album.sharedHeading">アルバム共通メタ情報 (チェックした項目を一括反映)</h4>
           <div class="album-shared-layout">
             <div class="album-artwork-col">
               <label class="checkbox-label">
                 <input id="album-apply-artwork" type="checkbox" checked />
-                <span>ジャケット画像を一括適用</span>
+                <span data-i18n="album.applyArtwork">ジャケット画像を一括適用</span>
               </label>
               <div id="album-artwork-drop" class="artwork-box artwork-box-sm" tabindex="0" role="button">
-                <img id="album-artwork-preview" class="artwork-preview hidden" alt="アルバム共通ジャケット" />
+                <img id="album-artwork-preview" class="artwork-preview hidden" alt="Album Cover" />
                 <div id="album-artwork-placeholder" class="artwork-placeholder">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                     <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                     <circle cx="8.5" cy="8.5" r="1.5" />
                     <polyline points="21 15 16 10 5 21" />
                   </svg>
-                  <span>画像を選択</span>
+                  <span data-i18n="album.selectImage">画像を選択</span>
                 </div>
                 <input id="album-artwork-input" type="file" accept="image/jpeg,image/png,image/webp" hidden />
               </div>
               <div class="artwork-actions">
-                <button id="btn-album-artwork-select" class="btn btn-secondary btn-xs" type="button">選択</button>
-                <button id="btn-album-artwork-remove" class="btn btn-ghost btn-xs" type="button" disabled>クリア</button>
+                <button id="btn-album-artwork-select" class="btn btn-secondary btn-xs" type="button" data-i18n="album.selectBtn">選択</button>
+                <button id="btn-album-artwork-remove" class="btn btn-ghost btn-xs" type="button" disabled data-i18n="album.clearBtn">クリア</button>
               </div>
             </div>
 
@@ -365,39 +369,39 @@
               <div class="field-group">
                 <label class="checkbox-label">
                   <input type="checkbox" data-album-field="album" checked />
-                  <span>アルバム名</span>
+                  <span data-i18n="album.field.album">アルバム名</span>
                 </label>
-                <input id="album-meta-album" type="text" class="input-control" placeholder="アルバム名" />
+                <input id="album-meta-album" type="text" class="input-control" />
               </div>
 
               <div class="field-group">
                 <label class="checkbox-label">
                   <input type="checkbox" data-album-field="albumArtist" checked />
-                  <span>アルバムアーティスト</span>
+                  <span data-i18n="album.field.albumArtist">アルバムアーティスト</span>
                 </label>
-                <input id="album-meta-albumArtist" type="text" class="input-control" placeholder="アルバムアーティスト" />
+                <input id="album-meta-albumArtist" type="text" class="input-control" />
               </div>
 
               <div class="field-group">
                 <label class="checkbox-label">
                   <input type="checkbox" data-album-field="artist" />
-                  <span>アーティスト名 (全曲共通にする場合)</span>
+                  <span data-i18n="album.field.artist">アーティスト名 (全曲共通にする場合)</span>
                 </label>
-                <input id="album-meta-artist" type="text" class="input-control" placeholder="アーティスト名" />
+                <input id="album-meta-artist" type="text" class="input-control" />
               </div>
 
               <div class="field-group">
                 <label class="checkbox-label">
                   <input type="checkbox" data-album-field="genre" checked />
-                  <span>ジャンル</span>
+                  <span data-i18n="album.field.genre">ジャンル</span>
                 </label>
-                <input id="album-meta-genre" type="text" class="input-control" placeholder="ジャンル" />
+                <input id="album-meta-genre" type="text" class="input-control" />
               </div>
 
               <div class="field-group">
                 <label class="checkbox-label">
                   <input type="checkbox" data-album-field="year" checked />
-                  <span>リリース年</span>
+                  <span data-i18n="album.field.year">リリース年</span>
                 </label>
                 <input id="album-meta-year" type="text" class="input-control mono" placeholder="2026" />
               </div>
@@ -405,23 +409,23 @@
               <div class="field-group">
                 <label class="checkbox-label">
                   <input type="checkbox" data-album-field="composer" />
-                  <span>作曲者</span>
+                  <span data-i18n="album.field.composer">作曲者</span>
                 </label>
-                <input id="album-meta-composer" type="text" class="input-control" placeholder="作曲者" />
+                <input id="album-meta-composer" type="text" class="input-control" />
               </div>
 
               <div class="field-group">
                 <label class="checkbox-label">
                   <input type="checkbox" data-album-field="lyricist" />
-                  <span>作詞者</span>
+                  <span data-i18n="album.field.lyricist">作詞者</span>
                 </label>
-                <input id="album-meta-lyricist" type="text" class="input-control" placeholder="作詞者" />
+                <input id="album-meta-lyricist" type="text" class="input-control" />
               </div>
 
               <div class="field-group">
                 <label class="checkbox-label">
                   <input type="checkbox" data-album-field="copyright" />
-                  <span>著作権情報</span>
+                  <span data-i18n="album.field.copyright">著作権情報</span>
                 </label>
                 <input id="album-meta-copyright" type="text" class="input-control" placeholder="© 2026 ..." />
               </div>
@@ -429,9 +433,9 @@
               <div class="field-group span-2">
                 <label class="checkbox-label">
                   <input type="checkbox" data-album-field="comment" />
-                  <span>コメント</span>
+                  <span data-i18n="album.field.comment">コメント</span>
                 </label>
-                <input id="album-meta-comment" type="text" class="input-control" placeholder="コメント" />
+                <input id="album-meta-comment" type="text" class="input-control" />
               </div>
             </div>
           </div>
@@ -439,10 +443,10 @@
 
         <div class="album-tracks-section">
           <div class="album-tracks-toolbar">
-            <h4 class="section-heading">アルバム内楽曲の個別設定</h4>
+            <h4 class="section-heading" data-i18n="album.tracksHeading">アルバム内楽曲の個別設定</h4>
             <div class="album-tracks-tools">
-              <button id="btn-album-autonumber" class="btn btn-secondary btn-xs" type="button">トラック番号を自動連番 (1/N)</button>
-              <button id="btn-album-titles-from-files" class="btn btn-ghost btn-xs" type="button">ファイル名から曲名を補完</button>
+              <button id="btn-album-autonumber" class="btn btn-secondary btn-xs" type="button" data-i18n="album.autoNumber">トラック番号を自動連番 (1/N)</button>
+              <button id="btn-album-titles-from-files" class="btn btn-ghost btn-xs" type="button" data-i18n="album.titlesFromFiles">ファイル名から曲名を補完</button>
             </div>
           </div>
 
@@ -450,12 +454,12 @@
             <table class="album-table">
               <thead>
                 <tr>
-                  <th style="width: 72px;">Track #</th>
-                  <th style="width: 68px;">Disc #</th>
-                  <th>曲名 (Title)</th>
-                  <th>アーティスト名 (Artist)</th>
-                  <th style="width: 82px;">BPM</th>
-                  <th style="width: 90px;">詳細</th>
+                  <th style="width: 72px;" data-i18n="album.col.track">Track #</th>
+                  <th style="width: 68px;" data-i18n="album.col.disc">Disc #</th>
+                  <th data-i18n="album.col.title">曲名 (Title)</th>
+                  <th data-i18n="album.col.artist">アーティスト名 (Artist)</th>
+                  <th style="width: 82px;" data-i18n="album.col.bpm">BPM</th>
+                  <th style="width: 90px;" data-i18n="album.col.detail">詳細</th>
                 </tr>
               </thead>
               <tbody id="album-tracks-tbody"></tbody>
@@ -465,8 +469,8 @@
       </div>
 
       <div class="modal-footer">
-        <button id="btn-cancel-album" class="btn btn-ghost" type="button">キャンセル</button>
-        <button id="btn-apply-album" class="btn btn-primary" type="button">アルバム設定を全トラックに反映</button>
+        <button id="btn-cancel-album" class="btn btn-ghost" type="button" data-i18n="meta.cancel">キャンセル</button>
+        <button id="btn-apply-album" class="btn btn-primary" type="button" data-i18n="album.applyBtn">アルバム設定を全トラックに反映</button>
       </div>
     </div>
   </div>

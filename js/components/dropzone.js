@@ -1,6 +1,7 @@
 import { store } from '../state/store.js';
 import { parseAudioFile } from '../services/metadataParser.js';
 import { showToast } from '../utils/toast.js';
+import { t } from '../i18n/i18n.js';
 
 const ACCEPTED_EXTS = new Set([
   'mp3', 'aac', 'm4a', 'wav', 'flac', 'ogg', 'oga', 'opus', 'wma', 'aiff', 'aif', 'webm', 'mka'
@@ -23,12 +24,12 @@ export function initDropzone() {
   async function handleFiles(fileList) {
     const validFiles = Array.from(fileList || []).filter(isAudioFile);
     if (validFiles.length === 0) {
-      showToast('対応している音声ファイルが見つかりませんでした', 'error');
+      showToast(t('toast.noValidFiles'), 'error');
       return;
     }
 
     const addedTracks = store.addTracks(validFiles);
-    showToast(`${addedTracks.length} 件の音声ファイルを追加しました`, 'info');
+    showToast(t('toast.filesAdded', { count: addedTracks.length }), 'info');
 
     // Parse existing metadata & artwork in parallel
     await Promise.all(

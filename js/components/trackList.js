@@ -2,6 +2,7 @@ import { AUDIO_FORMATS, BIT_DEPTHS, SAMPLE_RATES } from '../constants/audioConfi
 import { store } from '../state/store.js';
 import { downloadTrack } from '../services/downloadService.js';
 import { escapeHtml, formatBytes, formatDuration, formatSampleRate } from '../utils/formatters.js';
+import { i18n, t } from '../i18n/i18n.js';
 
 export function initTrackList({ onConvertTrack, onOpenMetadataModal }) {
   const trackListEl = document.getElementById('track-list');
@@ -20,8 +21,10 @@ export function initTrackList({ onConvertTrack, onOpenMetadataModal }) {
     const convertedCount = tracks.filter((t) => t.status === 'converted').length;
 
     queueSummaryEl.textContent = tracks.length === 0
-      ? '0 トラック'
-      : `${tracks.length} トラック・合計 ${formatBytes(totalSize)}${convertedCount > 0 ? ` (${convertedCount} 件変換済み)` : ''}`;
+      ? t('queue.emptyCount')
+      : convertedCount > 0
+        ? t('queue.summaryConverted', { count: tracks.length, size: formatBytes(totalSize), done: convertedCount })
+        : t('queue.summary', { count: tracks.length, size: formatBytes(totalSize) });
 
     btnConvertAll.disabled = tracks.length === 0 || store.isBatchConverting;
     btnAlbumMeta.disabled = tracks.length === 0 || store.isBatchConverting;
@@ -58,12 +61,12 @@ export function initTrackList({ onConvertTrack, onOpenMetadataModal }) {
         : '';
 
     const statusBadge = track.status === 'converted'
-      ? `<span class="track-badge badge-converted">変換完了 (${formatBytes(track.convertedBlob?.size || 0)})</span>`
+      ? `<span class="track-badge badge-converted">${escapeHtml(t('track.converted', { size: formatBytes(track.convertedBlob?.size || 0) }))}</span>`
       : track.status === 'converting'
-        ? `<span class="track-badge badge-converting">変換中 ${track.progress}%</span>`
+        ? `<span class="track-badge badge-converting">${escapeHtml(t('track.converting', { pct: track.progress }))}</span>`
         : track.status === 'error'
-          ? `<span class="track-badge badge-error">エラー</span>`
-          : `<span class="track-badge">${track.settings.useMaster ? 'マスター設定' : '個別設定'}</span>`;
+          ? `<span class="track-badge badge-error">${escapeHtml(t('track.error'))}</span>`
+          : `<span class="track-badge">${escapeHtml(track.settings.useMaster ? t('track.masterBadge') : t('track.customBadge'))}</span>`;
 
     const coverHtml = meta.artwork?.url
       ? `<img src="${meta.artwork.url}" alt="Cover" />`
@@ -84,7 +87,7 @@ export function initTrackList({ onConvertTrack, onOpenMetadataModal }) {
     const isConverting = track.status === 'converting' || store.isBatchConverting;
     const playerOpen = openPlayers.has(track.id);
     const playSrc = track.convertedUrl || track.sourceUrl;
-    const playLabel = track.convertedUrl ? '変換後' : '元ファイル';
+    const playLabel = track.convertedUrl ? t('track.convertedLabel') : t('track.sourceLabel');
 
     return `
       <article class="track-card ${statusClass}" data-track-id="${track.id}">
@@ -103,33 +106,33 @@ export function initTrackList({ onConvertTrack, onOpenMetadataModal }) {
           </div>
 
           <div class="track-controls-row">
-            <select class="track-inline-select" data-action="change-format" aria-label="出力形式" ${isConverting ? 'disabled' : ''}>
+            <select class="track-inline-select" data-action="change-format" ${isConverting ? 'disabled' : ''}>
               ${formatOptions}
             </select>
-            <select class="track-inline-select" data-action="change-bit" aria-label="ビット深度" ${isConverting ? 'disabled' : ''}>
+            <select class="track-inline-select" data-action="change-bit" ${isConverting ? 'disabled' : ''}>
               ${bitOptions}
             </select>
-            <select class="track-inline-select" data-action="change-rate" aria-label="サンプリング周波数" ${isConverting ? 'disabled' : ''}>
+            <select class="track-inline-select" data-action="change-rate" ${isConverting ? 'disabled' : ''}>
               ${rateOptions}
             </select>
           </div>
 
           <div class="track-actions">
-            <button class="btn btn-ghost btn-xs" type="button" data-action="toggle-player" title="試聴プレーヤー">
-              ${playerOpen ? '試聴を閉じる' : '試聴'}
+            <button class="btn btn-ghost btn-xs" type="button" data-action="toggle-player">
+              ${escapeHtml(playerOpen ? t('track.previewClose') : t('track.previewOpen'))}
             </button>
             <button class="btn btn-secondary btn-xs" type="button" data-action="edit-meta" ${isConverting ? 'disabled' : ''}>
-              メタタグ編集
+              ${escapeHtml(t('track.editMeta'))}
             </button>
             <button class="btn btn-primary btn-xs" type="button" data-action="convert" ${isConverting ? 'disabled' : ''}>
-              ${track.status === 'converted' ? '再変換' : '変換'}
+              ${escapeHtml(track.status === 'converted' ? t('track.reconvert') : t('track.convert'))}
             </button>
             ${track.status === 'converted' ? `
               <button class="btn btn-success btn-xs" type="button" data-action="download">
-                保存
+                ${escapeHtml(t('track.save'))}
               </button>
             ` : ''}
-            <button class="icon-btn btn-danger-ghost" type="button" data-action="remove" aria-label="トラックを削除" title="削除" ${isConverting ? 'disabled' : ''}>
+            <button class="icon-btn btn-danger-ghost" type="button" data-action="remove" aria-label="Remove" ${isConverting ? 'disabled' : ''}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="3 6 5 6 21 6" />
                 <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
@@ -209,5 +212,6 @@ export function initTrackList({ onConvertTrack, onOpenMetadataModal }) {
   });
 
   store.subscribe(render);
+  i18n.subscribe(render);
   render();
 }

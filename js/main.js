@@ -7,8 +7,12 @@ import { initTrackList } from './components/trackList.js';
 import { initMetadataEditorModal } from './components/metadataEditorModal.js';
 import { initAlbumMetadataModal } from './components/albumMetadataModal.js';
 import { showToast } from './utils/toast.js';
+import { i18n, t } from './i18n/i18n.js';
 
 function initApp() {
+  i18n.applyToDOM();
+
+  const langSelector = document.getElementById('lang-selector');
   const statusBadge = document.getElementById('wasm-status-badge');
   const statusText = document.getElementById('wasm-status-text');
   const btnConvertAll = document.getElementById('btn-convert-all');
@@ -21,11 +25,19 @@ function initApp() {
   const globalProgressCount = document.getElementById('global-progress-count');
   const globalProgressFill = document.getElementById('global-progress-fill');
 
-  // Sync WASM status badge
-  store.subscribe((s) => {
-    statusBadge.className = `status-badge status-${s.wasmStatus}`;
-    statusText.textContent = s.wasmStatusText;
+  langSelector?.addEventListener('change', (e) => {
+    i18n.setLang(e.target.value, { persist: true });
+    showToast(t('toast.langChanged'), 'info');
   });
+
+  function syncWasmBadge() {
+    statusBadge.className = `status-badge status-${store.wasmStatus}`;
+    statusText.textContent = store.wasmStatusKey ? t(store.wasmStatusKey) : store.wasmStatusText;
+  }
+
+  store.subscribe(syncWasmBadge);
+  i18n.subscribe(syncWasmBadge);
+  syncWasmBadge();
 
   async function convertSingleTrack(trackId) {
     const track = store.getTrack(trackId);
@@ -45,7 +57,7 @@ function initApp() {
 
     try {
       const result = await ffmpegService.convertTrack(track, {
-        onStatus: (status, text) => store.setWasmStatus(status, text),
+        onStatus: (status, key) => store.setWasmStatus(status, key),
         onProgress: (pct) => {
           const current = store.getTrack(trackId);
           if (current && current.status === 'converting') {
@@ -68,9 +80,9 @@ function initApp() {
       store.updateTrack(trackId, {
         status: 'error',
         progress: 0,
-        error: err?.message || '変換中にエラーが発生しました'
+        error: err?.message || 'Conversion error'
       });
-      showToast(`${track.originalName} の変換に失敗しました`, 'error');
+      showToast(t('toast.convertFailed', { name: track.originalName }), 'error');
       return false;
     }
   }
@@ -86,12 +98,12 @@ function initApp() {
     let successCount = 0;
 
     for (let i = 0; i < targets.length; i++) {
-      const t = targets[i];
-      globalProgressLabel.textContent = `変換中: ${t.metadata?.title || t.originalName}`;
+      const track = targets[i];
+      globalProgressLabel.textContent = t('queue.convertingTrack', { name: track.metadata?.title || track.originalName });
       globalProgressCount.textContent = `${i + 1} / ${targets.length}`;
       globalProgressFill.style.width = `${Math.round((i / targets.length) * 100)}%`;
 
-      const ok = await convertSingleTrack(t.id);
+      const ok = await convertSingleTrack(track.id);
       if (ok) successCount++;
     }
 
@@ -105,9 +117,9 @@ function initApp() {
     }, 1200);
 
     if (successCount === targets.length) {
-      showToast(`${successCount} 件すべての変換が完了しました`, 'success');
+      showToast(t('toast.convertAllSuccess', { count: successCount }), 'success');
     } else {
-      showToast(`${successCount} / ${targets.length} 件の変換が完了しました`, 'info');
+      showToast(t('toast.convertAllPartial', { ok: successCount, total: targets.length }), 'info');
     }
   }
 
@@ -130,17 +142,17 @@ function initApp() {
     try {
       btnDownloadZip.disabled = true;
       await downloadAllAsZip(store.tracks);
-      showToast('ZIPファイルのダウンロードを開始しました', 'success');
+      showToast(t('toast.zipStarted'), 'success');
     } catch (err) {
-      showToast(`ZIP作成エラー: ${err.message}`, 'error');
+      showToast(t('toast.zipError', { msg: err.message }), 'error');
     } finally {
-      btnDownloadZip.disabled = store.tracks.filter((t) => t.status === 'converted').length === 0;
+      btnDownloadZip.disabled = store.tracks.filter((tr) => tr.status === 'converted').length === 0;
     }
   });
 
   btnClearQueue.addEventListener('click', () => {
     store.clearTracks();
-    showToast('トラックキューをクリアしました', 'info');
+    showToast(t('toast.queueCleared'), 'info');
   });
 }
 

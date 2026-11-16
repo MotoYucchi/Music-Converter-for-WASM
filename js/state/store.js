@@ -1,5 +1,6 @@
 import { createEmptyMetadata } from '../constants/metadataFields.js';
 import { getExtension, stripExtension } from '../utils/formatters.js';
+import { t } from '../i18n/i18n.js';
 
 let nextId = 1;
 
@@ -14,7 +15,8 @@ class AppStore {
       channels: 'original'
     };
     this.wasmStatus = 'idle'; // 'idle' | 'loading' | 'ready' | 'busy' | 'error'
-    this.wasmStatusText = 'WASM 待機中';
+    this.wasmStatusKey = 'wasm.idle';
+    this.wasmStatusText = t('wasm.idle');
     this.isBatchConverting = false;
     this.listeners = new Set();
   }
@@ -30,9 +32,15 @@ class AppStore {
     }
   }
 
-  setWasmStatus(status, text) {
+  setWasmStatus(status, textOrKey) {
     this.wasmStatus = status;
-    this.wasmStatusText = text;
+    if (textOrKey && textOrKey.startsWith('wasm.')) {
+      this.wasmStatusKey = textOrKey;
+      this.wasmStatusText = t(textOrKey);
+    } else {
+      this.wasmStatusKey = `wasm.${status}`;
+      this.wasmStatusText = textOrKey || t(`wasm.${status}`);
+    }
     this.notify();
   }
 

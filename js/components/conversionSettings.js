@@ -1,6 +1,7 @@
 import { AUDIO_FORMATS, BIT_DEPTHS, SAMPLE_RATES, resolveSampleRateForFormat } from '../constants/audioConfig.js';
 import { store } from '../state/store.js';
 import { showToast } from '../utils/toast.js';
+import { i18n, t } from '../i18n/i18n.js';
 
 export function initConversionSettings() {
   const formatSel = document.getElementById('master-format');
@@ -49,12 +50,13 @@ export function initConversionSettings() {
 
     // Compatibility note
     const resolvedRate = resolveSampleRateForFormat(fmt.id, Number(s.sampleRate));
+    const baseNote = t(`fmt.note.${fmt.id}`);
     if (resolvedRate !== Number(s.sampleRate)) {
       noteEl.className = 'compatibility-note is-warning';
-      noteEl.textContent = `${fmt.note}（選択中の ${s.sampleRate / 1000}kHz は変換時に ${resolvedRate / 1000}kHz へ調整されます）`;
+      noteEl.textContent = `${baseNote}${t('settings.rateAdjusted', { req: s.sampleRate / 1000, res: resolvedRate / 1000 })}`;
     } else {
       noteEl.className = 'compatibility-note';
-      noteEl.textContent = fmt.note;
+      noteEl.textContent = baseNote;
     }
 
     applyAllBtn.disabled = store.tracks.length === 0 || store.isBatchConverting;
@@ -87,9 +89,10 @@ export function initConversionSettings() {
 
   applyAllBtn.addEventListener('click', () => {
     store.applyMasterToAllTracks();
-    showToast('マスター設定を全トラックに適用しました', 'success');
+    showToast(t('toast.masterApplied'), 'success');
   });
 
   store.subscribe(syncUI);
+  i18n.subscribe(syncUI);
   syncUI();
 }

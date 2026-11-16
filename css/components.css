@@ -720,3 +720,12 @@
   text-decoration: underline;
 }
 
+.lang-select {
+  width: auto;
+  padding: 0.36rem 0.65rem;
+  font-size: 0.78rem;
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-default);
+}
+
+

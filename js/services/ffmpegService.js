@@ -21,7 +21,7 @@ class FFmpegService {
     }
 
     this.loadPromise = (async () => {
-      onStatus?.('loading', 'WASM エンジン読込中...');
+      onStatus?.('loading', 'wasm.loading');
       const ffmpeg = new FFmpeg();
 
       ffmpeg.on('progress', ({ progress }) => {
@@ -49,11 +49,11 @@ class FFmpegService {
       }
 
       this.ffmpeg = ffmpeg;
-      onStatus?.('ready', 'WASM 準備完了');
+      onStatus?.('ready', 'wasm.ready');
       return ffmpeg;
     })().catch((err) => {
       this.loadPromise = null;
-      onStatus?.('error', 'WASM 読込エラー');
+      onStatus?.('error', 'wasm.error');
       throw err;
     });
 
@@ -159,7 +159,7 @@ class FFmpegService {
   async convertTrack(track, { onStatus, onProgress } = {}) {
     return this.enqueue(async () => {
       const ffmpeg = await this.ensureLoaded(onStatus);
-      onStatus?.('busy', '変換処理中...');
+      onStatus?.('busy', 'wasm.busy');
       this.progressCallback = onProgress || null;
 
       const inputExt = getExtension(track.originalName) || 'bin';
@@ -204,7 +204,7 @@ class FFmpegService {
         await this.safeDelete(ffmpeg, inputName);
         await this.safeDelete(ffmpeg, outputName);
         if (artworkName) await this.safeDelete(ffmpeg, artworkName);
-        onStatus?.('ready', 'WASM 準備完了');
+        onStatus?.('ready', 'wasm.ready');
       }
     });
   }
@@ -219,7 +219,7 @@ class FFmpegService {
 
     return this.enqueue(async () => {
       const ffmpeg = await this.ensureLoaded(onStatus);
-      onStatus?.('busy', 'メタタグ再反映中...');
+      onStatus?.('busy', 'wasm.retagging');
 
       const fmt = AUDIO_FORMATS[track.convertedFormat];
       if (!fmt) return null;
@@ -274,7 +274,7 @@ class FFmpegService {
         await this.safeDelete(ffmpeg, inputName);
         await this.safeDelete(ffmpeg, outputName);
         if (artworkName) await this.safeDelete(ffmpeg, artworkName);
-        onStatus?.('ready', 'WASM 準備完了');
+        onStatus?.('ready', 'wasm.ready');
       }
     });
   }
