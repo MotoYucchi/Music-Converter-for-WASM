@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ライセンス・ご利用上の注意 | WASM Music Converter</title>
+  <meta name="description" content="WASM Music Converter の Cookieless 設計、クライアントサイド WASM 処理に関する注意事項、および利用しているオープンソースライブラリのライセンス表記。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 18V5l12-2v13" />
+              <circle cx="6" cy="18" r="3" />
+              <circle cx="18" cy="16" r="3" />
+            </svg>
+          </div>
+          <div class="brand-text">
+            <h1 class="brand-title">ライセンス・ご利用上の注意</h1>
+            <p class="brand-subtitle">WASM Music Converter &mdash; Cookieless / Client-Side Processing</p>
+          </div>
+        </div>
+
+        <div class="header-actions">
+          <a href="index.html" class="btn btn-secondary btn-sm">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12" />
+              <polyline points="12 19 5 12 12 5" />
+            </svg>
+            <span>コンバーターに戻る</span>
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <!-- Cookieless & Privacy -->
+      <section class="panel" aria-labelledby="privacy-heading">
+        <div class="panel-header">
+          <h2 id="privacy-heading" class="panel-title">Cookieless 設計・プライバシー保護について</h2>
+        </div>
+        <div class="legal-prose">
+          <ul>
+            <li><strong>完全 Cookieless 設計</strong>: 本サイトでは Cookie、Web ビーコン、アクセス解析ツール、広告トラッキング等を一切使用していません。</li>
+            <li><strong>外部送信なし（100% クライアントサイド処理）</strong>: アップロードされた音声ファイル、ジャケット画像、および編集したメタタグ情報が外部サーバーへ送信・保存されることはありません。</li>
+            <li><strong>一時データの破棄</strong>: 変換前後の音声データはブラウザの一時メモリ（Blob URL / WebAssembly メモリ）上でのみ保持され、タブを閉じるかページを再読み込みすると完全に破棄されます。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Device & Performance Notice -->
+      <section class="panel" aria-labelledby="notice-heading">
+        <div class="panel-header">
+          <h2 id="notice-heading" class="panel-title">WASM 処理・ご利用端末に関する注意事項</h2>
+        </div>
+        <div class="legal-prose">
+          <ul>
+            <li><strong>初回読み込みサイズについて</strong>: 初回変換時（またはエンジン初期化時）に WebAssembly コア（<code>ffmpeg-core.wasm</code> 約 31MB）をお使いのブラウザへ読み込みます。モバイル回線等をご利用の際は通信量にご注意ください。</li>
+            <li><strong>処理速度と安定性はご利用端末に依存します</strong>: 音声のデコード・エンコード・リサンプリング処理はすべてご利用者様のデバイス（CPU・メモリ）上で実行されます。そのため、変換速度や長尺ファイル・高サンプリング周波数（192kHz / 384kHz 等）・多数ファイルの同時処理における安定性は、お使いの端末スペックやブラウザのメモリ上限に依存します。</li>
+            <li><strong>大量ファイル変換時の推奨事項</strong>: 端末のメモリ不足を防ぐため、非常に大きなファイルや数十曲単位のアルバムを変換する場合は、数曲〜1アルバム単位に分けて処理・保存することをおすすめします。</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- Third-Party Licenses -->
+      <section class="panel" aria-labelledby="licenses-heading">
+        <div class="panel-header">
+          <h2 id="licenses-heading" class="panel-title">使用ライブラリ・サードパーティライセンス表記</h2>
+        </div>
+
+        <div class="license-cards">
+          <article class="license-card">
+            <div class="license-card-head">
+              <h3>WASM Music Converter (本プロジェクト)</h3>
+              <span class="track-badge">MIT License</span>
+            </div>
+            <p class="license-desc">Copyright (c) 2026 MotoYucchi</p>
+            <p class="license-meta">
+              Repository: <a href="https://github.com/MotoYucchi/Music-Converter-for-WASM" target="_blank" rel="noopener noreferrer">github.com/MotoYucchi/Music-Converter-for-WASM</a>
+            </p>
+          </article>
+
+          <article class="license-card">
+            <div class="license-card-head">
+              <h3>@ffmpeg/ffmpeg &amp; @ffmpeg/util</h3>
+              <span class="track-badge">MIT License</span>
+            </div>
+            <p class="license-desc">Browser WebAssembly wrapper and utilities for FFmpeg (v0.12.15 / v0.12.2).</p>
+            <p class="license-meta">
+              Repository: <a href="https://github.com/ffmpegwasm/ffmpeg.wasm" target="_blank" rel="noopener noreferrer">github.com/ffmpegwasm/ffmpeg.wasm</a>
+            </p>
+          </article>
+
+          <article class="license-card">
+            <div class="license-card-head">
+              <h3>@ffmpeg/core (FFmpeg WebAssembly Core)</h3>
+              <span class="track-badge">GPL-2.0-or-later</span>
+            </div>
+            <p class="license-desc">
+              FFmpeg WebAssembly binary (v0.12.10) compiled with audio codecs including
+              <code>libmp3lame</code> (LGPL), <code>libvorbis</code> (BSD-3-Clause), <code>libopus</code> (BSD-3-Clause),
+              <code>aac</code>, <code>flac</code>, <code>alac</code>, <code>wmav2</code>, and PCM encoders.
+            </p>
+            <p class="license-meta">
+              Project: <a href="https://ffmpeg.org/" target="_blank" rel="noopener noreferrer">ffmpeg.org</a> /
+              <a href="https://github.com/ffmpegwasm/ffmpeg.wasm-core" target="_blank" rel="noopener noreferrer">github.com/ffmpegwasm/ffmpeg.wasm-core</a>
+            </p>
+          </article>
+
+          <article class="license-card">
+            <div class="license-card-head">
+              <h3>Google Fonts (Inter / Noto Sans JP / JetBrains Mono)</h3>
+              <span class="track-badge">SIL OFL 1.1</span>
+            </div>
+            <p class="license-desc">UI and monospace typography licensed under the SIL Open Font License, Version 1.1.</p>
+            <p class="license-meta">
+              Source: <a href="https://fonts.google.com/" target="_blank" rel="noopener noreferrer">fonts.google.com</a>
+            </p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <div class="footer-inner">
+        <span>WASM Music Converter &mdash; Cookieless &amp; 100% Client-Side</span>
+        <a href="index.html" class="footer-link">コンバーターへ戻る</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>

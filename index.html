@@ -170,12 +170,24 @@
           </div>
         </div>
       </section>
+
+      <aside class="notice-strip" aria-label="ご利用上の注意">
+        <div class="notice-strip-text">
+          <span class="notice-pill">Cookieless 設計</span>
+          <span>Cookie・外部送信は一切行いません。初回変換時に約31MBのWASMエンジンを読み込み、すべての処理はお使いの端末上で実行されるため、変換速度や安定性はご利用端末の性能に依存します。</span>
+        </div>
+        <a href="licenses.html" class="footer-link">詳細・ライセンス表記 &rarr;</a>
+      </aside>
     </main>
 
     <footer class="app-footer">
       <div class="footer-inner">
         <span>WASM Music Converter &mdash; Powered by FFmpeg.wasm</span>
-        <span>すべての音声処理・タグ編集はお使いのブラウザ内で完結します</span>
+        <div class="footer-links">
+          <span>完全 Cookieless / 端末完結処理</span>
+          <a href="licenses.html" class="footer-link">ライセンス・ご利用上の注意</a>
+          <a href="https://github.com/MotoYucchi/Music-Converter-for-WASM" class="footer-link" target="_blank" rel="noopener noreferrer">GitHub</a>
+        </div>
       </div>
     </footer>
   </div>

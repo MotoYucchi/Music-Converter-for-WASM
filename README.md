@@ -63,3 +63,20 @@ python3 -m http.server 8080
 ```
 
 ブラウザで `http://localhost:8080` を開いてください。GitHub Pages などの静的ホスティングにもそのままデプロイできます。
+
+## Cookieless 設計・ご利用上の注意
+
+- **完全 Cookieless 設計**: 本アプリは Cookie、アクセス解析、外部トラッキングを一切使用しません。音声ファイルやメタデータが外部サーバーへ送信されることもありません。
+- **端末依存の処理性能**: 初回変換時に約 31MB の WASM コア（`ffmpeg-core.wasm`）をブラウザへ読み込み、すべての音声変換・メタタグ処理をユーザー端末の CPU・メモリ上で実行します。変換速度や大容量ファイル処理の安定性はご利用端末の性能およびブラウザ環境に依存します。
+
+## ライセンス・使用ライブラリ
+
+本プロジェクトのソースコードは [MIT License](LICENSE) のもとで公開されています。また、以下のオープンソースライブラリ・フォントを利用しています（詳細は [THIRD_PARTY_LICENSES.md](THIRD_PARTY_LICENSES.md) およびサイト内の [licenses.html](licenses.html) をご参照ください）。
+
+| コンポーネント | バージョン | ライセンス | 用途 |
+| --- | --- | --- | --- |
+| `@ffmpeg/ffmpeg` | `0.12.15` | MIT | FFmpeg WASM ワーカー制御 |
+| `@ffmpeg/util` | `0.12.2` | MIT | 音声ファイル読込ユーティリティ |
+| `@ffmpeg/core` (FFmpeg) | `0.12.10` | GPL-2.0-or-later | 音声変換・メタタグ処理 WASM コア |
+| Google Fonts (`Inter`, `Noto Sans JP`, `JetBrains Mono`) | - | SIL OFL 1.1 | UI / 等幅フォント |
+
